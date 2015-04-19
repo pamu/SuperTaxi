@@ -109,7 +109,7 @@ public class UserDetailsActivity extends ActionBarActivity {
                             String source = bundle.getString("SOURCE");
                             String destination = bundle.getString("DESTINATION");
                             Long id = PreferenceManager.getDefaultSharedPreferences(getActivity()).getLong("ID", 123);
-                            String text = "User with id: " + id + " starts at " + source + " ends at "+destination;
+                            String text = "User with id: " + id + " starts at " + source + " to reach "+destination;
                             textView.setText(text);
                             new PostTask(getActivity()).execute(new String[]{id.toString(), source, destination});
                         }
