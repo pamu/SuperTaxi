@@ -80,7 +80,7 @@ public class MainActivity extends ActionBarActivity {
             driverRegister.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    dialog(2);
                 }
             });
 
@@ -91,12 +91,13 @@ public class MainActivity extends ActionBarActivity {
             final Dialog dialog = new Dialog(getActivity());
             dialog.setContentView(R.layout.register_dialog);
             dialog.setTitle("Register");
-            EditText editText = (EditText) dialog.findViewById(R.id.register_editText);
+            final EditText editText = (EditText) dialog.findViewById(R.id.register_editText);
             Button done = (Button) dialog.findViewById(R.id.done);
-            final String idString = editText.getText().toString();
+
             done.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    String idString = editText.getText().toString().trim();
                     if (!TextUtils.isEmpty(idString)) {
                         try {
                             long personId = Long.valueOf(idString);
@@ -114,6 +115,8 @@ public class MainActivity extends ActionBarActivity {
                         } catch (NumberFormatException ex) {
                             Toast.makeText(getActivity(), "Number Format Exception", Toast.LENGTH_SHORT).show();
                         }
+                    } else {
+                        Toast.makeText(getActivity(), "Input Empty", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
