@@ -1,5 +1,6 @@
 package com.pamulabs.pamu.supertaxi;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 public class UserActivity extends ActionBarActivity {
@@ -53,6 +60,9 @@ public class UserActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
+        Spinner source;
+        Spinner destination;
+
         public PlaceholderFragment() {
         }
 
@@ -60,6 +70,40 @@ public class UserActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_user, container, false);
+
+            if (getActivity().getIntent() != null) {
+                Intent intent = getActivity().getIntent();
+                Bundle bundle = intent.getExtras();
+                if (bundle.containsKey("ID")) {
+                    long id = bundle.getLong("ID");
+                    Toast.makeText(getActivity(), "id: -"+id, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            source = (Spinner) rootView.findViewById(R.id.source);
+            destination = (Spinner) rootView.findViewById(R.id.destination);
+
+            ArrayList<String> cities = new ArrayList<>();
+            cities.add("Hyderabad");
+            cities.add("Delhi");
+            cities.add("Banglore");
+            cities.add("Mumbai");
+            cities.add("Chennai");
+            cities.add("Mandi");
+
+            ArrayAdapter<String> arrayAdapter =
+                    new ArrayAdapter<>(getActivity(),
+                            android.R.layout.simple_spinner_item, cities);
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            source.setAdapter(arrayAdapter);
+            destination.setAdapter(arrayAdapter);
+
+            if (source.getSelectedItemId() != source.getSelectedItemId()) {
+
+            } else {
+                Toast.makeText(getActivity(), "source and destination cannot be same !!!", Toast.LENGTH_SHORT).show();
+            }
             return rootView;
         }
     }

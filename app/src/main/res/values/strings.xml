@@ -7,6 +7,6 @@
     <!-- layout strings-->
     <string name="register_as_user">Register As User</string>
     <string name="register_as_driver">Register As Driver</string>
-    <string name="title_activity_user">UserActivity</string>
-    <string name="title_activity_driver">DriverActivity</string>
+    <string name="title_activity_user">User</string>
+    <string name="title_activity_driver">Driver</string>
 </resources>
