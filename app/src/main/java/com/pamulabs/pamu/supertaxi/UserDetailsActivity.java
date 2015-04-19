@@ -136,6 +136,8 @@ public class UserDetailsActivity extends ActionBarActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(activity);
+            dialog.setTitle("Fetching ...");
+            dialog.setMessage("Getting bytes from cloud ...");
             dialog.show();
         }
 
@@ -173,7 +175,7 @@ public class UserDetailsActivity extends ActionBarActivity {
                 HttpGet get = new HttpGet(url.toString());
 
                 HttpParams httpParams = new BasicHttpParams();
-                HttpConnectionParams.setConnectionTimeout(httpParams, 10000);
+                HttpConnectionParams.setConnectionTimeout(httpParams, 3000);
 
                 HttpClient client = new DefaultHttpClient(httpParams);
 
