@@ -71,7 +71,7 @@ public class MainActivity extends ActionBarActivity {
             userRegister.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    dialog(1);
                 }
             });
 
@@ -96,13 +96,14 @@ public class MainActivity extends ActionBarActivity {
                 public void onClick(View v) {
                     if (id == 1) {
                         Intent intent = new Intent(getActivity(), UserActivity.class);
-
+                        startActivity(intent);
                     } else {
                         Intent intent = new Intent(getActivity(), DriverActivity.class);
-                        
+                        startActivity(intent);
                     }
                 }
             });
+            dialog.show();
         }
     }
 }
