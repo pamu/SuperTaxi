@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">SuperTaxi</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    
+    
+    <!-- layout strings-->
+    <string name="register_as_user">Register As User</string>
+    <string name="register_as_driver">Register As Driver</string>
+    <string name="title_activity_user">UserActivity</string>
+    <string name="title_activity_driver">DriverActivity</string>
+</resources>
