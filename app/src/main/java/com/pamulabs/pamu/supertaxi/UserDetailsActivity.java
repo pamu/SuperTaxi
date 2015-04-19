@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -86,6 +85,19 @@ public class UserDetailsActivity extends ActionBarActivity {
             final TextView textView = (TextView) rootView.findViewById(R.id.user_details_textview);
             Button go = (Button) rootView.findViewById(R.id.paygo);
 
+            Intent intent = getActivity().getIntent();
+            if (intent != null && intent.getExtras() != null) {
+                Bundle bundle = intent.getExtras();
+                if (bundle.containsKey("SOURCE") &&
+                        bundle.containsKey("DESTINATION")) {
+                    String source = bundle.getString("SOURCE");
+                    String destination = bundle.getString("DESTINATION");
+                    Long id = PreferenceManager.getDefaultSharedPreferences(getActivity()).getLong("ID", 123);
+                    String text = "User with id: " + id + " starts at " + source + " ends at " + destination;
+                    textView.setText(text);
+                }
+            }
+
             go.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -124,6 +136,7 @@ public class UserDetailsActivity extends ActionBarActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(activity);
+            dialog.show();
         }
 
         @Override
@@ -151,8 +164,10 @@ public class UserDetailsActivity extends ActionBarActivity {
                     .build();
 
             String result = null;
+
             try {
-                java.net.URL url = new URL(uri.toString());
+                URL url = new URL(uri.toString());
+
                 Log.d(LOG_TAG, url.toString());
 
                 HttpGet get = new HttpGet(url.toString());
