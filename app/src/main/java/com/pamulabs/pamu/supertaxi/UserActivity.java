@@ -111,9 +111,9 @@ public class UserActivity extends ActionBarActivity {
             done.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (source.getSelectedItemId() != source.getSelectedItemId()) {
+                    if (source.getSelectedItemId() != destination.getSelectedItemId()) {
 
-                        Intent intent = new Intent(getActivity(), DriverActivity.class);
+                        Intent intent = new Intent(getActivity(), UserDetailsActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putString("SOURCE", (String) source.getSelectedItem());
                         bundle.putString("DESTINATION", (String) destination.getSelectedItem());
