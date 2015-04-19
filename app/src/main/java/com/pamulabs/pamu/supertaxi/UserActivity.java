@@ -1,8 +1,9 @@
 package com.pamulabs.pamu.supertaxi;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,12 +11,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Driver;
 import java.util.ArrayList;
 
 
@@ -71,11 +72,19 @@ public class UserActivity extends ActionBarActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_user, container, false);
 
-            if (getActivity().getIntent() != null) {
+            Button done = (Button) rootView.findViewById(R.id.source_destination_done);
+
+            if (getActivity().getIntent() != null && getActivity().getIntent().getExtras() != null) {
                 Intent intent = getActivity().getIntent();
                 Bundle bundle = intent.getExtras();
                 if (bundle.containsKey("ID")) {
                     long id = bundle.getLong("ID");
+
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putLong("ID", id);
+                    editor.commit();
+
                     Toast.makeText(getActivity(), "id: -"+id, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -99,11 +108,24 @@ public class UserActivity extends ActionBarActivity {
             source.setAdapter(arrayAdapter);
             destination.setAdapter(arrayAdapter);
 
-            if (source.getSelectedItemId() != source.getSelectedItemId()) {
+            done.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (source.getSelectedItemId() != source.getSelectedItemId()) {
 
-            } else {
-                Toast.makeText(getActivity(), "source and destination cannot be same !!!", Toast.LENGTH_SHORT).show();
-            }
+                        Intent intent = new Intent(getActivity(), DriverActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("SOURCE", (String) source.getSelectedItem());
+                        bundle.putString("DESTINATION", (String) destination.getSelectedItem());
+                        intent.putExtras(bundle);
+
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getActivity(), "source and destination cannot be same !!!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
             return rootView;
         }
     }
