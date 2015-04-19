@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -91,15 +93,27 @@ public class MainActivity extends ActionBarActivity {
             dialog.setTitle("Register");
             EditText editText = (EditText) dialog.findViewById(R.id.register_editText);
             Button done = (Button) dialog.findViewById(R.id.done);
+            final String idString = editText.getText().toString();
             done.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (id == 1) {
-                        Intent intent = new Intent(getActivity(), UserActivity.class);
-                        startActivity(intent);
-                    } else {
-                        Intent intent = new Intent(getActivity(), DriverActivity.class);
-                        startActivity(intent);
+                    if (!TextUtils.isEmpty(idString)) {
+                        try {
+                            long personId = Long.valueOf(idString);
+                            Bundle bundle = new Bundle();
+                            bundle.putLong("ID", personId);
+                            if (id == 1) {
+                                Intent intent = new Intent(getActivity(), UserActivity.class);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            } else {
+                                Intent intent = new Intent(getActivity(), DriverActivity.class);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        } catch (NumberFormatException ex) {
+                            Toast.makeText(getActivity(), "Number Format Exception", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             });
